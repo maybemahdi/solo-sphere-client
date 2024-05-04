@@ -60,7 +60,7 @@ const UpdateJob = () => {
   };
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
-      <section className=" p-2 md:p-6 mx-auto bg-white rounded-md shadow-md ">
+      <section className="w-full p-2 md:p-6 mx-auto bg-white rounded-md shadow-md ">
         <h2 className="text-lg font-semibold text-gray-700 capitalize ">
           Update a Job
         </h2>
@@ -97,7 +97,7 @@ const UpdateJob = () => {
               <label className="text-gray-700">Deadline</label>
 
               <DatePicker
-                className="border p-2 rounded-md"
+                className="border p-2 w-full rounded-md"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
