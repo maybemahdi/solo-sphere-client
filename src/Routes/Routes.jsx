@@ -5,6 +5,7 @@ import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Registration from "../Pages/Registration";
 import AddJob from "../Pages/AddJob";
+import JobDetails from "../Pages/JobDetails";
 
 export const router = createBrowserRouter([
   {
@@ -18,15 +19,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: "/registration",
-        element: <Registration/>,
+        element: <Registration />,
       },
       {
         path: "/add-job",
-        element: <AddJob/>,
+        element: <AddJob />,
+      },
+      {
+        path: "/job/:id",
+        element: <JobDetails />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
       },
     ],
   },
