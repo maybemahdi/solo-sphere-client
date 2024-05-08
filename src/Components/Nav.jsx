@@ -67,7 +67,7 @@ const Nav = () => {
               <Link to={"/my-bids"}>My Bids</Link>
             </li>
             <li>
-              <Link to={"/req-bid"}>Bid Requests</Link>
+              <Link to={"/bid-req"}>Bid Requests</Link>
             </li>
             <li className="mt-2">
               {user && (

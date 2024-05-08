@@ -1,15 +1,19 @@
 import { FaUserAlt } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import toast from "react-hot-toast";
+import Loader from "../Components/Loader";
 
 const Login = () => {
-  const { signIn, googleLogin, setLoading } =
+  const { user, signIn, googleLogin, loading, setLoading } =
     useContext(AuthContext);
-  const emailRef = useRef(); // Add useRef for email input
+  // const emailRef = useRef(); // Add useRef for email input
   const navigate = useNavigate();
   const location = useLocation();
+
+  if (user) return navigate("/");
+  if (loading) return <Loader />;
 
   const handleFirebaseError = (errorCode) => {
     switch (errorCode) {
@@ -72,7 +76,10 @@ const Login = () => {
             Welcome back!
           </p>
 
-          <div onClick={loginWithGoogle} className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 ">
+          <div
+            onClick={loginWithGoogle}
+            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+          >
             <div className="px-4 py-2">
               <svg className="w-6 h-6" viewBox="0 0 40 40">
                 <path

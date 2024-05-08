@@ -5,9 +5,18 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
+import Loader from "../Components/Loader";
 
 const Registration = () => {
-  const { createUser, setUpdate, googleLogin, update, setLoading } = useContext(AuthContext);
+  const {
+    createUser,
+    user,
+    loading,
+    setUpdate,
+    googleLogin,
+    update,
+    setLoading,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleFirebaseError = (errorCode) => {
     switch (errorCode) {
@@ -17,6 +26,11 @@ const Registration = () => {
         return "An error occurred. Please try again later.";
     }
   };
+
+  if (user) return navigate("/");
+  if (loading) return <Loader />;
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -103,7 +117,10 @@ const Registration = () => {
             Get Your Free Account Now.
           </p>
 
-          <div onClick={loginWithGoogle} className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 ">
+          <div
+            onClick={loginWithGoogle}
+            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+          >
             <div className="px-4 py-2">
               <svg className="w-6 h-6" viewBox="0 0 40 40">
                 <path

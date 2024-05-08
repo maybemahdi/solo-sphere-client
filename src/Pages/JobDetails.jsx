@@ -57,6 +57,7 @@ const JobDetails = () => {
       console.log(data);
       toast.success("Your bid placed Successfully");
     } catch (err) {
+      toast.error("Something went wrong");
       console.log(err);
       console.log("Hi, i am error", err.message);
     }
