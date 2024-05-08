@@ -12,7 +12,9 @@ const BidRequest = () => {
   }, [user]);
   const getData = () => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/bid-req/${user.email}`)
+      .get(`${import.meta.env.VITE_API_URL}/bid-req/${user.email}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setReq(res.data);
       });

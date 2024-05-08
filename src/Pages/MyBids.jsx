@@ -11,7 +11,9 @@ const MyBids = () => {
   }, [user]);
   const getData = () => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/bids/${user.email}`)
+      .get(`${import.meta.env.VITE_API_URL}/bids/${user.email}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setMyBids(res.data);
       });
