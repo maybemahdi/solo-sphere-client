@@ -28,7 +28,9 @@ const AllJobs = () => {
   useEffect(() => {
     const getCount = async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/getCount?filter=${filter}&search=${search}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/getCount?filter=${filter}&search=${search}`
       );
       // console.log(data.count)
       setCount(data.count);

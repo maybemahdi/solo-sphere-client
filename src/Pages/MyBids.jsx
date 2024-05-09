@@ -20,7 +20,7 @@ const MyBids = () => {
   };
   const handleComplete = (id, updatedStatus) => {
     axios
-      .patch(`${import.meta.env.VITE_API_URL}/accept-bid/${id}`, {
+      .patch(`${import.meta.env.VITE_API_URL}/confirm-bid/${id}`, {
         updatedStatus,
       })
       .then((res) => {
@@ -117,7 +117,18 @@ const MyBids = () => {
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500">
+                        <div
+                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
+                            bid.status === "Pending"
+                              ? "bg-yellow-500 text-white"
+                              : "bg-green-500 text-white"
+                          } ${
+                            bid.status === "Rejected"
+                              ? "bg-red-500 text-white"
+                              : "bg-green-500 text-white"
+                          }
+                          `}
+                        >
                           <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
                           <h2 className="text-sm font-normal ">{bid.status}</h2>
                         </div>

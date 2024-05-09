@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 const BidRequest = () => {
   const { user } = useAuth();
   const [req, setReq] = useState([]);
-  console.log(req.length);
+  // console.log(req.length);
   useEffect(() => {
     getData();
   }, [user]);
@@ -21,15 +21,33 @@ const BidRequest = () => {
   };
   const handleAccept = (id, prevStatus, updatedStatus) => {
     // console.log(id, prevStatus, updatedStatus)
+    if (prevStatus === updatedStatus)
+      return toast.error("Status Already Updated");
     axios
-      .patch(`${import.meta.env.VITE_API_URL}/bid-req/${id}`, {
+      .patch(`${import.meta.env.VITE_API_URL}/accept-bid-req/${id}`, {
         prevStatus,
         updatedStatus,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.modifiedCount > 0) {
           toast.success("Accepted Request Successfully");
+          getData();
+        }
+      });
+  };
+  const handleReject = (id, prevStatus, updatedStatus) => {
+    // console.log(id, prevStatus, updatedStatus);
+    if (prevStatus === updatedStatus)
+      return toast.error("Status Already Updated");
+    axios
+      .patch(`${import.meta.env.VITE_API_URL}/reject-bid-req/${id}`, {
+        prevStatus,
+        updatedStatus,
+      })
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          toast.success("Reject Request Successfully");
           getData();
         }
       });
@@ -136,7 +154,12 @@ const BidRequest = () => {
                             singleReq.status === "Pending"
                               ? "bg-yellow-500 text-white"
                               : "bg-green-500 text-white"
-                          }`}
+                          } ${
+                            singleReq.status === "Rejected"
+                              ? "bg-red-500 text-white"
+                              : "bg-green-500 text-white"
+                          }
+                          `}
                         >
                           <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
                           <h2 className="text-sm font-normal">
@@ -174,6 +197,13 @@ const BidRequest = () => {
                           </button>
 
                           <button
+                            onClick={() => {
+                              handleReject(
+                                singleReq._id,
+                                singleReq.status,
+                                "Rejected"
+                              );
+                            }}
                             disabled={singleReq.status !== "Pending"}
                             className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
                           >
